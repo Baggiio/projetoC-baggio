@@ -19,7 +19,8 @@ void cadastro() {
   char cpf[100], cpfs[100];
 
   printf("Digite seu CPF: ");
-  scanf("%s", cpf);
+  fgets(cpf, 100, stdin);
+  sscanf(cpf, "%s", cpfs);
 
   strcpy(cpfs, cpf);
   strcat(cpfs, "s.bin");
@@ -32,10 +33,12 @@ void cadastro() {
   strcpy(user.cpf, cpf);
 
   printf("Digite seu nome: ");
-  scanf("%s", user.nome);
+  fgets(user.nome, 10, stdin);
+  sscanf(user.nome, "%s", user.nome);
 
   printf("Digite sua senha: ");
-  scanf("%s", user.senha);
+  fgets(user.senha, 10, stdin);
+  sscanf(user.senha, "%s", user.senha);
 
   if (arq == NULL) {
     printf("Erro ao abrir o arquivo");
@@ -58,7 +61,8 @@ int valida(char cpfx[10]) {
 
   strcpy(cpf, cpfx);
   printf("Insira sua senha:\n");
-  scanf("%s", password);
+  fgets(password, 100, stdin);
+  sscanf(password, "%[^\n]", password);
 
   strcat(cpf, ".bin");
 
@@ -87,13 +91,19 @@ void transferencia() {
   char cpf2[10], cpf[10];
 
   printf("Insira o seu CPF (apenas números):\n");
-  scanf("%s", cpf);
+  fgets(cpf, 10, stdin);
+  sscanf(cpf, "%s", cpf);
+
   printf("Insira a data da transferência (xx/yy/zzzz): ");
-  scanf("%d/%d/%d", &t.dia, &t.mes, &t.ano);
+  fgets(t.descr, 100, stdin);
+  sscanf(t.descr, "%d/%d/%d", &t.dia, &t.mes, &t.ano);
+
   printf("Insira o valor em reais (XX.YY): ");
-  scanf("%f", &t.valor);
+  fgets(t.descr, 100, stdin);
+  sscanf(t.descr, "%f", &t.valor);
   printf("Insira o CPF do destinarário: ");
-  scanf("%s", cpf2);
+  fgets(cpf2, 10, stdin);
+  sscanf(cpf2, "%s", cpf2);
 
   char cpf2s[10], cpfdest[10];
   strcpy(cpf2s, cpf2);
@@ -103,15 +113,19 @@ void transferencia() {
   FILE *try = fopen(cpf2, "rb");
   while (try == NULL) {
     printf("CPF não encontrado, digite novamente: ");
-    scanf("%s", cpf2);
+    fgets(cpf2, 10, stdin);
+    sscanf(cpf2, "%s", cpf2);
     try = fopen(cpf2, "rb");
   }
   fclose(try);
 
   printf("Digite a descrição da transferencia: ");
-  scanf("%s", t.descr);
+  fgets(t.descr, 100, stdin);
+  sscanf(t.descr, "%[^\n]", t.descr);
+
   printf("Digite a categoria da transferencia: ");
-  scanf("%s", t.cat);
+  fgets(t.cat, 100, stdin);
+  sscanf(t.cat, "%[^\n]", t.cat);
 
   printf("Data: %d/%d/%d\n", t.dia, t.mes, t.ano);
   printf("Valor: R$ %.2f\n", t.valor);
@@ -155,18 +169,23 @@ void transferencia() {
 void despesa() {
   transf t;
   char  cpf[10];
-
+  char line[100];
   printf("Insira o seu CPF (apenas números):\n");
-  scanf("%s", cpf);
+  fgets(line, 100, stdin);
+  sscanf(line, "%[^\n]", cpf);
   printf("Insira a data (xx/yy/zzzz): ");
-  scanf("%d/%d/%d", &t.dia, &t.mes, &t.ano);
+  fgets(line, 100, stdin);
+  sscanf(line, "%d/%d/%d", &t.dia, &t.mes, &t.ano);
   printf("Insira o valor em reais (XX.YY): ");
-  scanf("%f", &t.valor);
+  fgets(line, 100, stdin);
+  sscanf(line, "%f", &t.valor);
 
   printf("Digite a descrição: ");
-  scanf("%s", t.descr);
+  fgets(t.descr, 100, stdin);
+  sscanf(t.descr, "%[^\n]s", t.descr);
   printf("Digite a categoria: ");
-  scanf("%s", t.cat);
+  fgets(t.cat, 100, stdin);
+  sscanf(t.cat, "%[^\n]s", t.cat);
 
   printf("Data: %d/%d/%d\n", t.dia, t.mes, t.ano);
   printf("Valor: R$ %.2f\n", t.valor);
@@ -201,11 +220,14 @@ void despesa() {
 void relanu(){
   char cpf[10], cpfdir[10];
   int anoinx;
+  char line[100];
   printf("Insira o seu CPF (apenas números):\n");
-  scanf("%s", cpf);
+  fgets(cpf, 10, stdin);
+  sscanf(cpf, "%s", cpf);
 
   printf("Digite o ano que deseja consultar (xxxx):\n");
-  scanf("%d", &anoinx);
+  fgets(line, 10, stdin);
+  sscanf(line, "%d", &anoinx);
 
   const int anoin = anoinx;
   strcpy(cpfdir, cpf);
@@ -276,10 +298,13 @@ void ifexist(char cat[100], char diretorio[100]) {
 void relmen() {
   char cpf[10], cpfdir[10];
   int mesinx, anoinx;
+  char line[100];
   printf("Insira o seu CPF (apenas números):\n");
-  scanf("%s", cpf);
+  fgets(cpf, 10, stdin);
+  sscanf(cpf, "%s", cpf);
   printf("Digite o mês e ano que deseja consultar (xx/yyyy):\n");
-  scanf("%d/%d", &mesinx, &anoinx);
+  fgets(line, 10, stdin);
+  sscanf(line, "%d/%d", &mesinx, &anoinx);
 
   const int mesin = mesinx;
   const int anoin = anoinx;
@@ -378,7 +403,9 @@ void relmen() {
 void saldo() {
   char cpf[10];
   printf("CPF:\n");
-  scanf("%s", cpf);
+  fgets(cpf, 10, stdin);
+  sscanf(cpf, "%s", cpf);
+
   int val = valida(cpf);
   while (val != 0) {
     val = valida(cpf);
@@ -411,7 +438,8 @@ void saldo() {
 void deposito(){
   char cpf[10];
   printf("Insira o seu CPF:\n");
-  scanf("%s", cpf);
+  fgets(cpf, 10, stdin);
+  sscanf(cpf, "%s", cpf);
 
   int val = valida(cpf);
   while (val != 0) {
@@ -425,11 +453,15 @@ void deposito(){
     FILE *arq = fopen(cpf, "ab");
     transf t;
     printf("Insira a data do depósito (xx/yy/zzzz): ");
-    scanf("%d/%d/%d", &t.dia, &t.mes, &t.ano);
+    char line[100];
+    fgets(line, 100, stdin);
+    sscanf(line, "%d/%d/%d", &t.dia, &t.mes, &t.ano);
     printf("Insira o valor em reais (XX.YY): ");
-    scanf("%f", &t.valor);
+    fgets(line, 100, stdin);
+    sscanf(line, "%lf", &t.valor);
     printf("Insira a descrição:\n");
-    scanf("%s", t.descr);
+    fgets(t.descr, 100, stdin);
+    sscanf(t.descr, "%[^\n]", t.descr);
     char cat[100];
     strcpy(cat, "Deposito");
     strcpy(t.cat, cat);
@@ -466,9 +498,7 @@ int begin() {
 
 int menu() {
   int i;
-  printf("Menu de opções:\n1 - Consultar Saldo\n2 - Transferência\n3 - Poupança\n4 - Relatório "
-         "Mensal\n5 - Relatório Anual\n6 - Depósito\n7 - Cadastrar Despesa\n0 "
-         "- Sair\nSelecione uma opção:\n");
+  printf("Menu de opções:\n1 - Consultar Saldo\n2 - Transferência\n3 - Poupança\n4 - Relatório Mensal\n5 - Relatório Anual\n6 - Depósito\n7 - Cadastrar Despesa\n0 - Sair\nSelecione uma opção:\n");
   scanf("%d", &i);
   return i;
 }
