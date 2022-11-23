@@ -17,6 +17,7 @@ typedef struct
   char descr[100], cat[100];
 } transf;
 
+// Função para criar o arquivo de login do usuário e salvar os dados usando a struct Login nos aruivos "%cpf%.bin"
 void cadastro()
 {
   char cpf[100], cpfs[100];
@@ -58,6 +59,7 @@ void cadastro()
   printf("\n");
 }
 
+// Função para verificar se o usuário já está cadastrado no sistema, chamada diversas vezes no código
 int valida(char cpfx[10])
 {
   char password[100], cpf[10];
@@ -93,6 +95,7 @@ int valida(char cpfx[10])
   return 1;
 }
 
+//calcula o saldo do usuário a partir do arquivo de transações "%cpf%s.bin"
 double saldo(char cpf[10])
 {
   char cpfs[10];
@@ -113,15 +116,31 @@ double saldo(char cpf[10])
   return money;
 }
 
+// escreve as transações no arquivo "%cpf%s.bin" de quem recebe e quem envia
 void transferencia()
 {
   transf t;
+  FILE *try;
   char cpf2[10], cpf[10];
   char line[100];
 
   printf("Insira o seu CPF (apenas números):\n");
   fgets(cpf, 10, stdin);
   sscanf(cpf, "%s", cpf);
+
+  char aux[100];
+  strcpy(aux, cpf);
+  strcat(aux, ".bin");
+
+  try = fopen(aux, "rb");
+  while (try == NULL)
+  {
+    printf("CPF não encontrado, digite novamente: ");
+    fgets(aux, 10, stdin);
+    sscanf(aux, "%s", cpf);
+    try = fopen(aux, "rb");
+  }
+  fclose(try);
 
   printf("Insira a data da transferência (xx/yy/zzzz): ");
   fgets(line, 100, stdin);
@@ -139,7 +158,7 @@ void transferencia()
   strcpy(cpfdest, cpf2);
   strcat(cpf2, ".bin");
 
-  FILE *try = fopen(cpf2, "rb");
+  try = fopen(cpf2, "rb");
   while (try == NULL)
   {
     printf("CPF não encontrado, digite novamente: ");
@@ -204,6 +223,7 @@ typedef struct
   int d, m, y;
 } Date;
 
+// função para verificar se é ano bissexto
 int countLeapYears(Date d)
 {
   int years = d.y;
@@ -214,6 +234,7 @@ int countLeapYears(Date d)
   return years / 4 - years / 100 + years / 400;
 }
 
+// função para calcular o número de dias entre duas datas
 int getDifference(Date dt1, Date dt2)
 {
 
@@ -237,10 +258,12 @@ int getDifference(Date dt1, Date dt2)
   return (n2 - n1);
 }
 
+// função para calcular o saldo do usuário a partir de um intervalo de datas, poupança rendimento de 0.5% ao mês
 void poupanca()
 {
   transf t;
   Date dt1, dt2;
+  FILE *try;
   char cpf[10];
   char line[100];
   int dia_apl, mes_apl, ano_apl;
@@ -248,6 +271,20 @@ void poupanca()
   printf("Insira o seu CPF (apenas números):\n");
   fgets(cpf, 10, stdin);
   sscanf(cpf, "%s", cpf);
+
+  char aux[100];
+  strcpy(aux, cpf);
+  strcat(aux, ".bin");
+
+  try = fopen(aux, "rb");
+  while (try == NULL)
+  {
+    printf("CPF não encontrado, digite novamente: ");
+    fgets(aux, 10, stdin);
+    sscanf(aux, "%s", cpf);
+    try = fopen(aux, "rb");
+  }
+  fclose(try);
 
   if (saldo(cpf) <= 0) {
     printf("Saldo insuficiente para aplicação!\n");
@@ -302,7 +339,7 @@ void poupanca()
 
         int dias = getDifference(dt1, dt2);
         int meses = dias / 30;
-        float rendimento = money * 0.005 * meses;
+        float rendimento = valor_apl * 0.005 * meses;
 
         t.valor = rendimento;
 
@@ -327,6 +364,7 @@ void poupanca()
   }
 }
 
+// cadastra uma despesa no arquivo de despesas do usuário "%cpf%s.bin"
 void despesa()
 {
   transf t;
@@ -335,6 +373,21 @@ void despesa()
   printf("Insira o seu CPF (apenas números):\n");
   fgets(line, 100, stdin);
   sscanf(line, "%[^\n]", cpf);
+
+  char aux[100];
+  strcpy(aux, cpf);
+  strcat(aux, ".bin");
+
+  FILE *try = fopen(aux, "rb");
+  while (try == NULL)
+  {
+    printf("CPF não encontrado, digite novamente: ");
+    fgets(aux, 10, stdin);
+    sscanf(aux, "%s", cpf);
+    try = fopen(aux, "rb");
+  }
+  fclose(try);
+
   printf("Insira a data (xx/yy/zzzz): ");
   fgets(line, 100, stdin);
   sscanf(line, "%d/%d/%d", &t.dia, &t.mes, &t.ano);
@@ -382,6 +435,7 @@ void despesa()
   }
 }
 
+// le as movimentações do no ano escolhido e salva em uma pasta com arquivos nomeados de acordo com a categoria das movimentações do usuário "%cpf%s.bin"
 void relanu()
 {
   char cpf[10], cpfdir[10];
@@ -390,6 +444,20 @@ void relanu()
   printf("Insira o seu CPF (apenas números):\n");
   fgets(cpf, 10, stdin);
   sscanf(cpf, "%s", cpf);
+
+  char aux[100];
+  strcpy(aux, cpf);
+  strcat(aux, ".bin");
+
+  FILE *try = fopen(aux, "rb");
+  while (try == NULL)
+  {
+    printf("CPF não encontrado, digite novamente: ");
+    fgets(aux, 10, stdin);
+    sscanf(aux, "%s", cpf);
+    try = fopen(aux, "rb");
+  }
+  fclose(try);
 
   printf("Digite o ano que deseja consultar (xxxx):\n");
   fgets(line, 10, stdin);
@@ -449,6 +517,7 @@ void relanu()
   }
 }
 
+// testa se o arquivo existe
 void ifexist(char cat[100], char diretorio[100])
 {
   char path[100];
@@ -468,6 +537,7 @@ void ifexist(char cat[100], char diretorio[100])
   }
 }
 
+// le as movimentações do mês escolhido e salva em uma pasta com arquivos nomeados de acordo com a categoria das movimentações do usuário "%cpf%s.bin"
 void relmen()
 {
   char cpf[10], cpfdir[10];
@@ -476,6 +546,21 @@ void relmen()
   printf("Insira o seu CPF (apenas números):\n");
   fgets(cpf, 10, stdin);
   sscanf(cpf, "%s", cpf);
+
+  char aux[100];
+  strcpy(aux, cpf);
+  strcat(aux, ".bin");
+
+  FILE *try = fopen(aux, "rb");
+  while (try == NULL)
+  {
+    printf("CPF não encontrado, digite novamente: ");
+    fgets(aux, 10, stdin);
+    sscanf(aux, "%s", cpf);
+    try = fopen(aux, "rb");
+  }
+  fclose(try);
+
   printf("Digite o mês e ano que deseja consultar (xx/yyyy):\n");
   fgets(line, 10, stdin);
   sscanf(line, "%d/%d", &mesinx, &anoinx);
@@ -495,8 +580,6 @@ void relmen()
     strcat(cpf, "s.bin");
 
     FILE *arq = fopen(cpf, "rb");
-
-    // fseek(arq, sizeof(Login)+1, SEEK_SET);
 
     transf t;
 
@@ -580,12 +663,27 @@ void relmen()
   }
 }
 
+// le as movimentações exibe o saldo para o usuario
 void exibe_saldo()
 {
   char cpf[10];
   printf("Insira o seu CPF:\n");
   fgets(cpf, 10, stdin);
   sscanf(cpf, "%s", cpf);
+
+  char aux[100];
+  strcpy(aux, cpf);
+  strcat(aux, ".bin");
+
+  FILE *try = fopen(aux, "rb");
+  while (try == NULL)
+  {
+    printf("CPF não encontrado, digite novamente: ");
+    fgets(aux, 10, stdin);
+    sscanf(aux, "%s", cpf);
+    try = fopen(aux, "rb");
+  }
+  fclose(try);
 
   int val = valida(cpf);
   while (val != 0)
@@ -601,12 +699,27 @@ void exibe_saldo()
   }
 }
 
+// adiciona uma despesa
 void deposito()
 {
   char cpf[10];
   printf("Insira o seu CPF:\n");
   fgets(cpf, 10, stdin);
   sscanf(cpf, "%s", cpf);
+
+  char aux[100];
+  strcpy(aux, cpf);
+  strcat(aux, ".bin");
+
+  FILE *try = fopen(aux, "rb");
+  while (try == NULL)
+  {
+    printf("CPF não encontrado, digite novamente: ");
+    fgets(aux, 10, stdin);
+    sscanf(aux, "%s", cpf);
+    try = fopen(aux, "rb");
+  }
+  fclose(try);
 
   int val = valida(cpf);
   while (val != 0)
@@ -648,6 +761,7 @@ void deposito()
   }
 }
 
+// função que inicializa o código para fazer o login
 int begin()
 {
   char aux[100];
@@ -666,16 +780,18 @@ int begin()
   }
 }
 
+// função que imprime o menu
 int menu()
 {
   char aux[100];
   int i;
-  printf("Menu de opções:\n1 - Saldo\n2 - Transferência\n3 - Poupança\n4 - Relatório Mensal\n5 - Relatório Anual\n6 - Depósito\n7 - Cadastrar Despesa\n0 - Sair\nSelecione uma opção:\n");
+  printf("\nMenu de opções:\n\n1 - Saldo\n2 - Transferência\n3 - Poupança\n4 - Relatório Mensal\n5 - Relatório Anual\n6 - Depósito\n7 - Cadastrar Despesa\n8 - Novo cadastro\n\n0 - Sair\nSelecione uma opção:\n");
   fgets(aux, 10, stdin);
   sscanf(aux, "%d", &i);
   return i;
 }
 
+// main que chama as funções com base no menu
 int main(void)
 {
   int cad = begin();
@@ -715,12 +831,16 @@ int main(void)
         printf("\nCadastrar Despesa:\n");
         despesa();
         continue;
+      case 8:
+        printf("\nCadastrar novo usuário:\n");
+        cadastro();
+        continue;
       case 0:
         printf("Saindo...\n");
         exit(1);
       default:
         printf("Opção inválida!\n");
-        break;
+        continue;
       }
     }
   }
