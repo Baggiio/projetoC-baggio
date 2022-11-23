@@ -785,7 +785,7 @@ int menu()
 {
   char aux[100];
   int i;
-  printf("\nMenu de opções:\n\n1 - Saldo\n2 - Transferência\n3 - Poupança\n4 - Relatório Mensal\n5 - Relatório Anual\n6 - Depósito\n7 - Cadastrar Despesa\n8 - Novo cadastro\n\n0 - Sair\nSelecione uma opção:\n");
+  printf("\nMenu de opções:\n\n1 - Saldo\n2 - Depósito\n3 - Despesa\n4 - Transferência\n5 - Poupança\n6 - Relatório mensal\n7 - Relatório anual\n8 - Novo cadastro\n\n0 - Sair\nSelecione uma opção:\n");
   fgets(aux, 10, stdin);
   sscanf(aux, "%d", &i);
   return i;
