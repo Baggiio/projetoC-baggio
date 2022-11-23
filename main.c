@@ -807,29 +807,32 @@ int main(void)
         exibe_saldo();
         continue;
       case 2:
-        printf("\nTransferência:\n");
-        transferencia();
-        continue;
-      case 3:
-        printf("\nPoupança:\n");
-        poupanca();
-        continue;
-      case 4:
-        printf("\nRelatório Mensal:\n");
-        relmen();
-        continue;
-      case 5:
-        printf("\nRelatório Anual:\n");
-        relanu();
-        continue;
-        ;
-      case 6:
         printf("\nDepósito:\n");
         deposito();
         continue;
-      case 7:
+      case 3:
         printf("\nCadastrar Despesa:\n");
         despesa();
+
+        continue;
+      case 4:
+        printf("\nTransferência:\n");
+        transferencia();
+
+        continue;
+      case 5:
+
+        printf("\nPoupança:\n");
+        poupanca();
+        continue;
+        ;
+      case 6:
+        printf("\nRelatório Mensal:\n");
+        relmen();
+        continue;
+      case 7:
+        printf("\nRelatório Anual:\n");
+        relanu();
         continue;
       case 8:
         printf("\nCadastrar novo usuário:\n");
