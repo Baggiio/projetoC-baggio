@@ -120,12 +120,27 @@ double saldo(char cpf[10])
 void transferencia()
 {
   transf t;
+  FILE *try;
   char cpf2[10], cpf[10];
   char line[100];
 
   printf("Insira o seu CPF (apenas números):\n");
   fgets(cpf, 10, stdin);
   sscanf(cpf, "%s", cpf);
+
+  char aux[100];
+  strcpy(aux, cpf);
+  strcat(aux, ".bin");
+
+  try = fopen(aux, "rb");
+  while (try == NULL)
+  {
+    printf("CPF não encontrado, digite novamente: ");
+    fgets(aux, 10, stdin);
+    sscanf(aux, "%s", cpf);
+    try = fopen(aux, "rb");
+  }
+  fclose(try);
 
   printf("Insira a data da transferência (xx/yy/zzzz): ");
   fgets(line, 100, stdin);
@@ -143,7 +158,7 @@ void transferencia()
   strcpy(cpfdest, cpf2);
   strcat(cpf2, ".bin");
 
-  FILE *try = fopen(cpf2, "rb");
+  try = fopen(cpf2, "rb");
   while (try == NULL)
   {
     printf("CPF não encontrado, digite novamente: ");
@@ -248,6 +263,7 @@ void poupanca()
 {
   transf t;
   Date dt1, dt2;
+  FILE *try;
   char cpf[10];
   char line[100];
   int dia_apl, mes_apl, ano_apl;
@@ -255,6 +271,20 @@ void poupanca()
   printf("Insira o seu CPF (apenas números):\n");
   fgets(cpf, 10, stdin);
   sscanf(cpf, "%s", cpf);
+
+  char aux[100];
+  strcpy(aux, cpf);
+  strcat(aux, ".bin");
+
+  try = fopen(aux, "rb");
+  while (try == NULL)
+  {
+    printf("CPF não encontrado, digite novamente: ");
+    fgets(aux, 10, stdin);
+    sscanf(aux, "%s", cpf);
+    try = fopen(aux, "rb");
+  }
+  fclose(try);
 
   if (saldo(cpf) <= 0) {
     printf("Saldo insuficiente para aplicação!\n");
@@ -343,6 +373,21 @@ void despesa()
   printf("Insira o seu CPF (apenas números):\n");
   fgets(line, 100, stdin);
   sscanf(line, "%[^\n]", cpf);
+
+  char aux[100];
+  strcpy(aux, cpf);
+  strcat(aux, ".bin");
+
+  FILE *try = fopen(aux, "rb");
+  while (try == NULL)
+  {
+    printf("CPF não encontrado, digite novamente: ");
+    fgets(aux, 10, stdin);
+    sscanf(aux, "%s", cpf);
+    try = fopen(aux, "rb");
+  }
+  fclose(try);
+
   printf("Insira a data (xx/yy/zzzz): ");
   fgets(line, 100, stdin);
   sscanf(line, "%d/%d/%d", &t.dia, &t.mes, &t.ano);
@@ -399,6 +444,20 @@ void relanu()
   printf("Insira o seu CPF (apenas números):\n");
   fgets(cpf, 10, stdin);
   sscanf(cpf, "%s", cpf);
+
+  char aux[100];
+  strcpy(aux, cpf);
+  strcat(aux, ".bin");
+
+  FILE *try = fopen(aux, "rb");
+  while (try == NULL)
+  {
+    printf("CPF não encontrado, digite novamente: ");
+    fgets(aux, 10, stdin);
+    sscanf(aux, "%s", cpf);
+    try = fopen(aux, "rb");
+  }
+  fclose(try);
 
   printf("Digite o ano que deseja consultar (xxxx):\n");
   fgets(line, 10, stdin);
@@ -487,6 +546,21 @@ void relmen()
   printf("Insira o seu CPF (apenas números):\n");
   fgets(cpf, 10, stdin);
   sscanf(cpf, "%s", cpf);
+
+  char aux[100];
+  strcpy(aux, cpf);
+  strcat(aux, ".bin");
+
+  FILE *try = fopen(aux, "rb");
+  while (try == NULL)
+  {
+    printf("CPF não encontrado, digite novamente: ");
+    fgets(aux, 10, stdin);
+    sscanf(aux, "%s", cpf);
+    try = fopen(aux, "rb");
+  }
+  fclose(try);
+
   printf("Digite o mês e ano que deseja consultar (xx/yyyy):\n");
   fgets(line, 10, stdin);
   sscanf(line, "%d/%d", &mesinx, &anoinx);
@@ -597,6 +671,20 @@ void exibe_saldo()
   fgets(cpf, 10, stdin);
   sscanf(cpf, "%s", cpf);
 
+  char aux[100];
+  strcpy(aux, cpf);
+  strcat(aux, ".bin");
+
+  FILE *try = fopen(aux, "rb");
+  while (try == NULL)
+  {
+    printf("CPF não encontrado, digite novamente: ");
+    fgets(aux, 10, stdin);
+    sscanf(aux, "%s", cpf);
+    try = fopen(aux, "rb");
+  }
+  fclose(try);
+
   int val = valida(cpf);
   while (val != 0)
   {
@@ -618,6 +706,20 @@ void deposito()
   printf("Insira o seu CPF:\n");
   fgets(cpf, 10, stdin);
   sscanf(cpf, "%s", cpf);
+
+  char aux[100];
+  strcpy(aux, cpf);
+  strcat(aux, ".bin");
+
+  FILE *try = fopen(aux, "rb");
+  while (try == NULL)
+  {
+    printf("CPF não encontrado, digite novamente: ");
+    fgets(aux, 10, stdin);
+    sscanf(aux, "%s", cpf);
+    try = fopen(aux, "rb");
+  }
+  fclose(try);
 
   int val = valida(cpf);
   while (val != 0)
@@ -683,7 +785,7 @@ int menu()
 {
   char aux[100];
   int i;
-  printf("Menu de opções:\n1 - Saldo\n2 - Transferência\n3 - Poupança\n4 - Relatório Mensal\n5 - Relatório Anual\n6 - Depósito\n7 - Cadastrar Despesa\n8 - Novo cadastro\n0 - Sair\nSelecione uma opção:\n");
+  printf("\nMenu de opções:\n\n1 - Saldo\n2 - Transferência\n3 - Poupança\n4 - Relatório Mensal\n5 - Relatório Anual\n6 - Depósito\n7 - Cadastrar Despesa\n8 - Novo cadastro\n\n0 - Sair\nSelecione uma opção:\n");
   fgets(aux, 10, stdin);
   sscanf(aux, "%d", &i);
   return i;
