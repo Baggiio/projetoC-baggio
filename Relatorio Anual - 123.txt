@@ -1,0 +1,10 @@
+Data: 27/6/2023
+Valor: R$ -273.70
+Descrição: Rendimento da poupança
+Categoria: Poupança
+
+Data: 22/5/2023
+Valor: R$ -1000.00
+Descrição: despesao (Despesa)
+Categoria: Jogos
+

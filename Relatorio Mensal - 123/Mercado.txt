@@ -1,0 +1,10 @@
+Data: 22/11/2022
+Valor: R$ 99.99
+Descrição: Alimentos
+Categoria: Mercado
+
+Data: 26/11/2022
+Valor: R$ -900.00
+Descrição: Mercado
+Categoria: Mercado
+

@@ -1,5 +1,0 @@
-Data: 22/2/2022
-Valor: R$ 22.22
-Descrição: Encher o tanque
-Categoria: Gasolina
-

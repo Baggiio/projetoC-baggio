@@ -5,17 +5,20 @@
 #include <errno.h>
 #include <unistd.h>
 
-typedef struct {
+typedef struct
+{
   char nome[10], senha[10], cpf[10];
 } Login;
 
-typedef struct {
+typedef struct
+{
   int mes, dia, ano;
   float valor;
   char descr[100], cat[100];
 } transf;
 
-void cadastro() {
+void cadastro()
+{
   char cpf[100], cpfs[100];
 
   printf("Digite seu CPF: ");
@@ -40,13 +43,14 @@ void cadastro() {
   fgets(user.senha, 100, stdin);
   sscanf(user.senha, "%[^\n]", user.senha);
 
-  if (arq == NULL) {
+  if (arq == NULL)
+  {
     printf("Erro ao abrir o arquivo");
     exit(1);
   }
 
   fwrite(&user, sizeof(Login), 1, arq);
-  fwrite("\n", sizeof(char),1, arq);
+  fwrite("\n", sizeof(char), 1, arq);
 
   fclose(arq);
   fclose(arq2);
@@ -54,7 +58,8 @@ void cadastro() {
   printf("\n");
 }
 
-int valida(char cpfx[10]) {
+int valida(char cpfx[10])
+{
   char password[100], cpf[10];
 
   strcpy(cpf, cpfx);
@@ -65,7 +70,8 @@ int valida(char cpfx[10]) {
   strcat(cpf, ".bin");
 
   FILE *arq = fopen(cpf, "rb");
-  if (arq == NULL) {
+  if (arq == NULL)
+  {
     printf("Erro ao abrir o arquivo");
     exit(1);
   }
@@ -73,10 +79,13 @@ int valida(char cpfx[10]) {
   Login user;
   fread(&user, sizeof(Login), 1, arq);
 
-  if (strcmp(user.senha, password) == 0) {
+  if (strcmp(user.senha, password) == 0)
+  {
     printf("Usuário validado com sucesso!\n\n");
     return 0;
-  } else {
+  }
+  else
+  {
     printf("CPF ou Senha incorretos! Tente novamente.\n");
     return 1;
   }
@@ -86,8 +95,10 @@ int valida(char cpfx[10]) {
 
 double saldo(char cpf[10])
 {
-  strcat(cpf, "s.bin");
-  FILE *arq = fopen(cpf, "rb");
+  char cpfs[10];
+  strcpy(cpfs, cpf);
+  strcat(cpfs, "s.bin");
+  FILE *arq = fopen(cpfs, "rb");
   transf s;
   double money = 0;
   while (1)
@@ -102,7 +113,8 @@ double saldo(char cpf[10])
   return money;
 }
 
-void transferencia() {
+void transferencia()
+{
   transf t;
   char cpf2[10], cpf[10];
   char line[100];
@@ -128,7 +140,8 @@ void transferencia() {
   strcat(cpf2, ".bin");
 
   FILE *try = fopen(cpf2, "rb");
-  while (try == NULL) {
+  while (try == NULL)
+  {
     printf("CPF não encontrado, digite novamente: ");
     fgets(cpf2, 10, stdin);
     sscanf(cpf2, "%s", cpf2);
@@ -151,16 +164,18 @@ void transferencia() {
   printf("\nValide seus dados para transferir:\n");
 
   int val = valida(cpf);
-  while (val != 0) {
+  while (val != 0)
+  {
     val = valida(cpf);
   }
 
-  if (val == 0) {
+  if (val == 0)
+  {
     strcat(cpf2s, "s.bin");
     FILE *arq = fopen(cpf2s, "ab");
 
     fwrite(&t, sizeof(transf), 1, arq);
-    fwrite("\n", sizeof(char),1, arq);
+    fwrite("\n", sizeof(char), 1, arq);
     fclose(arq);
 
     strcat(cpf, "s.bin");
@@ -169,20 +184,23 @@ void transferencia() {
     t.valor = t.valor * -1;
 
     fwrite(&t, sizeof(transf), 1, arq2);
-    fwrite("\n", sizeof(char),1, arq);
+    fwrite("\n", sizeof(char), 1, arq);
     fclose(arq2);
 
     printf("Transferencia realizada com sucesso!\n");
     printf("Pressione qualquer tecla para continuar...\n");
     getchar();
-  } else {
+  }
+  else
+  {
     printf("CPF ou senha invalidos!\n");
     printf("Pressione qualquer tecla para continuar...\n");
     getchar();
   }
 }
 
-typedef struct {
+typedef struct
+{
   int d, m, y;
 } Date;
 
@@ -196,21 +214,22 @@ int countLeapYears(Date d)
   return years / 4 - years / 100 + years / 400;
 }
 
-int getDifference(Date dt1, Date dt2){
-  printf("Data inicial: %d/%d/%d\n", dt1.d, dt1.m, dt1.y);
-  printf("Data final: %d/%d/%d\n", dt2.d, dt2.m, dt2.y);
+int getDifference(Date dt1, Date dt2)
+{
 
   const int monthDays[12] = {31, 28, 31, 30, 31, 30,
                              31, 31, 30, 31, 30, 31};
 
   long int n1 = dt1.y * 365 + dt1.d;
-  for (int i = 0; i < dt1.m - 1; i++) {
+  for (int i = 0; i < dt1.m - 1; i++)
+  {
     n1 += monthDays[i];
   }
   n1 += countLeapYears(dt1);
 
   long int n2 = dt2.y * 365 + dt2.d;
-  for (int i = 0; i < dt2.m - 1; i++) {
+  for (int i = 0; i < dt2.m - 1; i++)
+  {
     n2 += monthDays[i];
   }
   n2 += countLeapYears(dt2);
@@ -218,76 +237,100 @@ int getDifference(Date dt1, Date dt2){
   return (n2 - n1);
 }
 
-void poupanca() {
+void poupanca()
+{
   transf t;
   Date dt1, dt2;
   char cpf[10];
   char line[100];
   int dia_apl, mes_apl, ano_apl;
+  float valor_apl;
   printf("Insira o seu CPF (apenas números):\n");
   fgets(cpf, 10, stdin);
   sscanf(cpf, "%s", cpf);
-  printf("Insira a data de aplicação (xx/yy/zzzz): ");
-  fgets(line, 100, stdin);
-  sscanf(line, "%d/%d/%d", &dia_apl, &mes_apl, &ano_apl);
-  printf("Insira a data de retirada (xx/yy/zzzz): ");
-  fgets(line, 100, stdin);
-  sscanf(line, "%d/%d/%d", &t.dia, &t.mes, &t.ano);
-  printf("Insira o valor que deseja aplicar na poupança, em reais (XX.YY): ");
-  fgets(line, 100, stdin);
-  sscanf(line, "%f", &t.valor);
 
-  char cat[100];
-  strcpy(cat, "Poupança");
-  strcpy(t.cat, cat);
-
-  char desc[100];
-  strcpy(desc, "Rendimento da poupança");
-  strcpy(t.descr, desc);
-
-  int val = valida(cpf);
-  while (val != 0) {
-    val = valida(cpf);
+  if (saldo(cpf) <= 0) {
+    printf("Saldo insuficiente para aplicação!\n");
+    printf("Pressione qualquer tecla para continuar...\n");
+    getchar();
+    return;
   }
+  else {
 
-  if (val == 0) {
-    double money = saldo(cpf);
-    strcat(cpf, "s.bin");
+    printf("Insira a data de aplicação (xx/yy/zzzz): ");
+    fgets(line, 100, stdin);
+    sscanf(line, "%d/%d/%d", &dia_apl, &mes_apl, &ano_apl);
+    printf("Insira a data de retirada (xx/yy/zzzz): ");
+    fgets(line, 100, stdin);
+    sscanf(line, "%d/%d/%d", &t.dia, &t.mes, &t.ano);
+    printf("Insira o valor que deseja aplicar na poupança, em reais (XX.YY): ");
+    fgets(line, 100, stdin);
+    sscanf(line, "%f", &valor_apl);
 
-    dt1.d = dia_apl;
-    dt1.m = mes_apl;
-    dt1.y = ano_apl;
-    dt2.d = t.dia;
-    dt2.m = t.mes;
-    dt2.y = t.ano;
+    char cat[100];
+    strcpy(cat, "Poupança");
+    strcpy(t.cat, cat);
 
-    int dias = getDifference(dt1, dt2);
-    int meses = dias / 30;
-    float rendimento = money * 0.005 * meses;
+    char desc[100];
+    strcpy(desc, "Rendimento da poupança");
+    strcpy(t.descr, desc);
 
-    t.valor = rendimento;
+    int val = valida(cpf);
+    while (val != 0)
+    {
+      val = valida(cpf);
+    }
 
-    FILE *arq = fopen(cpf, "ab");
-    fwrite(&t, sizeof(transf), 1, arq);
-    fwrite("\n", sizeof(char), 1, arq);
+    if (val == 0)
+    {
+      double money = saldo(cpf);
+      if (valor_apl > money) {
+        printf("Saldo insuficiente para aplicação!\n");
+        printf("Pressione qualquer tecla para continuar...\n");
+        getchar();
+        return;
+      }
+      else {
+        strcat(cpf, "s.bin");
 
-    fclose(arq);
+        dt1.d = dia_apl;
+        dt1.m = mes_apl;
+        dt1.y = ano_apl;
+        dt2.d = t.dia;
+        dt2.m = t.mes;
+        dt2.y = t.ano;
 
-    printf("Aplicação realizada com sucesso!\n");
-    printf("A sua aplicação rendeu R$ %.2f em %d meses.\n", rendimento, meses);
-    printf("Pressione qualquer tecla para continuar...\n");
-    getchar();
+        int dias = getDifference(dt1, dt2);
+        int meses = dias / 30;
+        float rendimento = money * 0.005 * meses;
 
-  } else {
-    printf("CPF ou senha invalidos!\n");
-    printf("Pressione qualquer tecla para continuar...\n");
-    getchar();
+        t.valor = rendimento;
+
+        FILE *arq = fopen(cpf, "ab");
+
+        fwrite(&t, sizeof(transf), 1, arq);
+        fwrite("\n", sizeof(char), 1, arq);
+        fclose(arq);
+
+        printf("Aplicação realizada com sucesso!\n");
+        printf("A sua aplicação rendeu R$ %.2f em %d meses.\n", rendimento, meses);
+        printf("Pressione qualquer tecla para continuar...\n");
+        getchar();
+      }
+    }
+    else
+    {
+      printf("CPF ou senha invalidos!\n");
+      printf("Pressione qualquer tecla para continuar...\n");
+      getchar();
+    }
   }
 }
 
-void despesa() {
+void despesa()
+{
   transf t;
-  char  cpf[10];
+  char cpf[10];
   char line[100];
   printf("Insira o seu CPF (apenas números):\n");
   fgets(line, 100, stdin);
@@ -312,30 +355,35 @@ void despesa() {
   printf("Valide seus dados para cadastrar:\n");
 
   int val = valida(cpf);
-  while (val != 0) {
+  while (val != 0)
+  {
     val = valida(cpf);
   }
 
-  if (val == 0) {
+  if (val == 0)
+  {
     strcat(cpf, "s.bin");
 
     FILE *arq2 = fopen(cpf, "ab");
     t.valor = t.valor * -1;
     fwrite(&t, sizeof(transf), 1, arq2);
-    fwrite("\n", sizeof(char),1, arq2);
+    fwrite("\n", sizeof(char), 1, arq2);
     fclose(arq2);
 
     printf("Despesa cadastrada com sucesso!\n");
     printf("Pressione qualquer tecla para continuar...\n");
     getchar();
-  } else {
+  }
+  else
+  {
     printf("CPF ou senha invalidos!\n");
     printf("Pressione qualquer tecla para continuar...\n");
     getchar();
   }
 }
 
-void relanu(){
+void relanu()
+{
   char cpf[10], cpfdir[10];
   int anoinx;
   char line[100];
@@ -351,13 +399,14 @@ void relanu(){
   strcpy(cpfdir, cpf);
 
   int val = valida(cpf);
-  while (val != 0) {
+  while (val != 0)
+  {
     val = valida(cpf);
   }
-  
-  if (val == 0) {
-    strcat(cpf, "s.bin");
 
+  if (val == 0)
+  {
+    strcat(cpf, "s.bin");
 
     transf t;
     char filename[100];
@@ -367,21 +416,23 @@ void relanu(){
 
     FILE *arq = fopen(cpf, "rb");
     FILE *wr = fopen(filename, "wb");
-    while (1) {
+    while (1)
+    {
 
-      fread(&t, 1+sizeof(transf), 1, arq);
-      if (feof(arq)) {
+      fread(&t, 1 + sizeof(transf), 1, arq);
+      if (feof(arq))
+      {
         break;
       }
 
-      if (t.ano == anoin) {
+      if (t.ano == anoin)
+      {
 
         fprintf(wr, "Data: %d/%d/%d\n", t.dia, t.mes, t.ano);
         fprintf(wr, "Valor: R$ %.2f\n", t.valor);
         fprintf(wr, "Descrição: %s\n", t.descr);
         fprintf(wr, "Categoria: %s\n", t.cat);
         fprintf(wr, "\n");
-
       }
     }
     printf("Relatório Anual gerado com sucesso!\n");
@@ -389,29 +440,36 @@ void relanu(){
     fclose(wr);
     printf("Pressione qualquer tecla para continuar...\n");
     getchar();
-  } else {
+  }
+  else
+  {
     printf("CPF ou senha invalidos!\n");
     printf("Pressione qualquer tecla para continuar...\n");
     getchar();
   }
 }
 
-void ifexist(char cat[100], char diretorio[100]) {
+void ifexist(char cat[100], char diretorio[100])
+{
   char path[100];
   strcpy(path, diretorio);
   strcat(cat, ".txt");
   strcat(path, cat);
   strcpy(cat, path);
   FILE *arq = fopen(cat, "r");
-  if (arq == NULL) {
+  if (arq == NULL)
+  {
     FILE *arq = fopen(cat, "w");
-    fclose(arq);  
-  } else {
+    fclose(arq);
+  }
+  else
+  {
     fclose(arq);
   }
 }
 
-void relmen() {
+void relmen()
+{
   char cpf[10], cpfdir[10];
   int mesinx, anoinx;
   char line[100];
@@ -427,11 +485,13 @@ void relmen() {
   strcpy(cpfdir, cpf);
 
   int val = valida(cpf);
-  while (val != 0) {
+  while (val != 0)
+  {
     val = valida(cpf);
   }
-  
-  if (val == 0) {
+
+  if (val == 0)
+  {
     strcat(cpf, "s.bin");
 
     FILE *arq = fopen(cpf, "rb");
@@ -459,7 +519,9 @@ void relmen() {
         if (strcmp(dire->d_name, ".") == 0 || strcmp(dire->d_name, "..") == 0)
         {
           continue;
-        } else {
+        }
+        else
+        {
           char rem[100];
           strcpy(rem, directory);
           strcat(rem, dire->d_name);
@@ -479,14 +541,16 @@ void relmen() {
       closedir(dir);
     }
 
-    while (1) {
-      fread(&t, 1+sizeof(transf), 1, arq);
+    while (1)
+    {
+      fread(&t, 1 + sizeof(transf), 1, arq);
       if (feof(arq))
       {
         break;
       }
 
-      if (t.mes == mesin && t.ano == anoin) {
+      if (t.mes == mesin && t.ano == anoin)
+      {
 
         char aux[100];
 
@@ -507,14 +571,17 @@ void relmen() {
 
     printf("Pressione qualquer tecla para continuar...\n");
     getchar();
-  } else {
+  }
+  else
+  {
     printf("CPF ou senha invalidos!\n");
     printf("Pressione qualquer tecla para continuar...\n");
     getchar();
   }
 }
 
-void exibe_saldo() {
+void exibe_saldo()
+{
   char cpf[10];
   printf("Insira o seu CPF:\n");
   fgets(cpf, 10, stdin);
@@ -534,19 +601,21 @@ void exibe_saldo() {
   }
 }
 
-void deposito(){
+void deposito()
+{
   char cpf[10];
   printf("Insira o seu CPF:\n");
   fgets(cpf, 10, stdin);
   sscanf(cpf, "%s", cpf);
 
   int val = valida(cpf);
-  while (val != 0) {
+  while (val != 0)
+  {
     val = valida(cpf);
   }
-  
-  
-  if (val == 0) {
+
+  if (val == 0)
+  {
     strcat(cpf, "s.bin");
 
     FILE *arq = fopen(cpf, "ab");
@@ -570,29 +639,35 @@ void deposito(){
     printf("\nDeposito realizado com sucesso!\n");
     printf("Pressione qualquer tecla para continuar...\n");
     getchar();
-
-  } else {
+  }
+  else
+  {
     printf("CPF ou senha invalidos!\n");
     printf("Pressione qualquer tecla para continuar...\n");
     getchar();
   }
 }
 
-int begin() {
+int begin()
+{
   char aux[100];
   int i;
   printf("Possui cadastro?\n1 - Sim\n2 - Não\n");
   fgets(aux, 10, stdin);
   sscanf(aux, "%d", &i);
-  if (i == 1) {
+  if (i == 1)
+  {
     return 0;
-  } else {
+  }
+  else
+  {
     cadastro();
     return 0;
   }
 }
 
-int menu() {
+int menu()
+{
   char aux[100];
   int i;
   printf("Menu de opções:\n1 - Saldo\n2 - Transferência\n3 - Poupança\n4 - Relatório Mensal\n5 - Relatório Anual\n6 - Depósito\n7 - Cadastrar Despesa\n0 - Sair\nSelecione uma opção:\n");
@@ -601,12 +676,16 @@ int menu() {
   return i;
 }
 
-int main(void) {
+int main(void)
+{
   int cad = begin();
-  if (cad == 0) {
-    while (cad == 0) {
+  if (cad == 0)
+  {
+    while (cad == 0)
+    {
       int op = menu();
-      switch (op) {
+      switch (op)
+      {
       case 1:
         printf("Consultar Saldo:\n");
         exibe_saldo();
@@ -626,7 +705,8 @@ int main(void) {
       case 5:
         printf("\nRelatório Anual:\n");
         relanu();
-        continue;;
+        continue;
+        ;
       case 6:
         printf("\nDepósito:\n");
         deposito();
@@ -643,7 +723,9 @@ int main(void) {
         break;
       }
     }
-  } else {
+  }
+  else
+  {
     main();
   }
   printf("%d", cad);

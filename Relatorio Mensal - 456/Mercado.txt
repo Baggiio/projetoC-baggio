@@ -1,5 +1,0 @@
-Data: 16/2/2022
-Valor: R$ -700.00
-Descrição: Compras mensais
-Categoria: Mercado
-

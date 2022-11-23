@@ -1,0 +1,15 @@
+Data: 22/11/2022
+Valor: R$ -199.99
+Descrição: Mensalidade
+Categoria: Estudos
+
+Data: 25/11/2022
+Valor: R$ -1099.00
+Descrição: Mensalidade
+Categoria: Estudos
+
+Data: 27/11/2022
+Valor: R$ 200.00
+Descrição: Pixes
+Categoria: Estudos
+

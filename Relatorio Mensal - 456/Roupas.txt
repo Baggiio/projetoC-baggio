@@ -1,0 +1,10 @@
+Data: 10/12/2022
+Valor: R$ 450.00
+Descrição: camiseta
+Categoria: Roupas
+
+Data: 12/12/2022
+Valor: R$ -299.99
+Descrição: retorno
+Categoria: Roupas
+

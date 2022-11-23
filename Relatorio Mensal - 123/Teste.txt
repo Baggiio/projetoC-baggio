@@ -1,0 +1,5 @@
+Data: 25/11/2022
+Valor: R$ -500.40
+Descrição: Testando
+Categoria: Teste
+

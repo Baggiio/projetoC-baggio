@@ -1,0 +1,10 @@
+Data: 15/12/2022
+Valor: R$ 1099.99
+Descrição: tv
+Categoria: Casa
+
+Data: 22/12/2022
+Valor: R$ -899.00
+Descrição: ventilador
+Categoria: Casa
+

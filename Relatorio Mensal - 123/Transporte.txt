@@ -1,0 +1,10 @@
+Data: 23/11/2022
+Valor: R$ -750.00
+Descrição: Gasolina
+Categoria: Transporte
+
+Data: 31/11/2022
+Valor: R$ -500.00
+Descrição: Gasosa
+Categoria: Transporte
+
