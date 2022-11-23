@@ -1,0 +1,10 @@
+Data: 15/2/2022
+Valor: R$ 100.00
+Descrição: Almoco
+Categoria: Comida
+
+Data: 21/2/2022
+Valor: R$ -10.00
+Descrição: Cantina
+Categoria: Comida
+

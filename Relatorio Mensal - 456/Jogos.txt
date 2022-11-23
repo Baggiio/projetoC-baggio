@@ -1,0 +1,5 @@
+Data: 14/2/2022
+Valor: R$ -800.00
+Descrição: Compra de videogame
+Categoria: Jogos
+

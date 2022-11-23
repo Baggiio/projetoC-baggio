@@ -1,0 +1,65 @@
+Data: 11/2/2022
+Valor: R$ 250.00
+Descrição: Matricula no Colegio
+Categoria: Estudos
+
+Data: 13/2/2022
+Valor: R$ 0.00
+Descrição: Primeiro deposito
+Categoria: Deposito
+
+Data: 14/2/2022
+Valor: R$ -800.00
+Descrição: Compra de videogame
+Categoria: Jogos
+
+Data: 15/2/2022
+Valor: R$ 100.00
+Descrição: Almoco
+Categoria: Comida
+
+Data: 16/2/2022
+Valor: R$ -700.00
+Descrição: Compras mensais
+Categoria: Mercado
+
+Data: 21/2/2022
+Valor: R$ -10.00
+Descrição: Cantina
+Categoria: Comida
+
+Data: 22/2/2022
+Valor: R$ 22.22
+Descrição: Encher o tanque
+Categoria: Gasolina
+
+Data: 11/3/2022
+Valor: R$ 700.00
+Descrição: Mensalidade
+Categoria: Estudos
+
+Data: 12/3/2022
+Valor: R$ -70.00
+Descrição: Brinquedo
+Categoria: Jogos
+
+Data: 20/3/2022
+Valor: R$ 777.77
+Descrição: Divida quitada (Transferência)
+Categoria: Jogos
+
+Data: 31/3/2022
+Valor: R$ -20000.00
+Descrição: Carro novo (Despesa)
+Categoria: To pobre
+
+Data: 10/12/2022
+Valor: R$ 100.00
+Descrição: papaleguas (Transferência)
+Categoria: Comida
+
+Data: 10/10/2022
+Valor: R$ 100.00
+Descrição: dps
+Categoria: Deposito
+
